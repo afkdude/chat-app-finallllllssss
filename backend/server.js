@@ -1,32 +1,39 @@
-import express from 'express';
-import dotenv from "dotenv"; 
+import express from 'express';          
+import dotenv from "dotenv";            
+import cookieParser from 'cookie-parser'; 
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
 
-import authRoutes from './routes/auth.routes.js'
+import messageRoutes from './routes/message.routes.js';
 import connectToMongoDB from './db/connectToMongoDB.js';
 
+
 const app = express();
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 
-dotenv.config(); 
-app.use(express.json()); 
+// Configure dotenv to read environment variables from .env file
+dotenv.config();
 
-//setting up middleware for auth routes
-app.use('/api/auth', authRoutes);  
+// Middleware to parse incoming JSON request bodies
+app.use(express.json());
 
-// app.get('/', (req, res) => {
-//   //root route  
-//   res.send("server is ready ")
-// }); 
+// Middleware to parse cookies from incoming requests
+app.use(cookieParser());
 
 
+// All authentication-related requests will be handled by authRoutes
+app.use('/api/auth', authRoutes);
 
+// All message-related requests will be handled by messageRoutes
+app.use('/api/messages', messageRoutes);
 
+//all user related routes will be handled by userRoutes
 
-
-
+app.use("/api/users", userRoutes); 
 
 app.listen(PORT, () => {
+  // Establish connection to the MongoDB database
+  connectToMongoDB();
 
-  connectToMongoDB(); 
   console.log(`Server running on ${PORT}`);
-})
+});
