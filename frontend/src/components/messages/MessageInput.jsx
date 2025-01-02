@@ -9,7 +9,7 @@ function MessageInput() {
 
   //calling hook to give value
 
-  const { loading, sendMessage } = useSendMessage(); 
+  const {  sendMessage } = useSendMessage(); 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
