@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.route.js'
 import messageRoutes from './routes/message.route.js'
+import grpmessagingRoutes from './routes/group.route.js'
 import cors from "cors"
 
 import { connectDb } from './lib/db.js';
@@ -29,6 +30,9 @@ app.use(cors(
 app.use('/api/auth', authRoutes); 
 //messaging routes 
 app.use('/api/message', messageRoutes); 
+
+//grpmessaging routes
+app.use('/api/grp-messaging', grpmessagingRoutes);
 
 
 

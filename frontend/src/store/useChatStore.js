@@ -6,9 +6,11 @@ import { useAuthStore } from "./useAuthStore";
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
+  groups:[],
   selectedUser: null, //will help in displaying the placeholder default component when no user is selected 
   //loaders for users and messages to load skeletons 
   isUsersLoading: false,
+  isGrpsLoading: false,
   isMessagesLoading: false,
 
   getUsers: async () => {
@@ -69,4 +71,16 @@ export const useChatStore = create((set, get) => ({
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+
+  getgroups: async () => {
+    set({ isGrpsLoading: true });
+    try {
+      const res = await axiosInstance.get("/grp-messaging");
+      set({ users: res.data });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUsersLoading: false });
+    }
+  },
 }));

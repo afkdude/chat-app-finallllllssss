@@ -6,7 +6,7 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 
 const Sidebar = () => {
   //fetching from chatStore
-  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
+  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading , isGrpsLoading } =
     useChatStore();
 
   //implemented later  on using socket
@@ -23,7 +23,7 @@ const Sidebar = () => {
     : users;
 
   //displaying skeleton if users list  is stil loading
-  if (isUsersLoading) return <SidebarSkeleton />;
+  if (isUsersLoading || isGrpsLoading) return <SidebarSkeleton />;
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
@@ -32,6 +32,7 @@ const Sidebar = () => {
           <Users className="size-6" />
           <span className="font-medium hidden lg:block">Contacts</span>
         </div>
+        
         {/*  Online filter toggle */}
         <div className="mt-3 hidden lg:flex items-center gap-2">
           <label className="cursor-pointer flex items-center gap-2">
